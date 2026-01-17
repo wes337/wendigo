@@ -19,7 +19,8 @@ export default function About() {
         <div className="flex flex-col gap-[16px] text-sm">
           <p>
             Wendigo Corp is founded on one principle:{" "}
-            <strong>We solve the problems we create.</strong>
+            <strong>We solve the problems we create.</strong> But first we need
+            to create them, and <em>that</em> is our specialty.
           </p>
           <p>
             Founded in 2001, on a cool dry summer morning just north of a small
@@ -63,7 +64,7 @@ export default function About() {
               <figure className="m-auto">
                 <Image
                   className={`${dropShadow}`}
-                  src={"/images/about.jfif"}
+                  src={"/images/about.jpg"}
                   width={492}
                   height={400}
                   alt=""
@@ -75,8 +76,9 @@ export default function About() {
             </div>
           </div>
           <p>
-            That image is a .jfif file. Who uses the fuck uses .jfif? The guy
-            who made jfif should quit his job we already have jpeg and png.
+            That image was a .jfif file. Who uses the fuck uses .jfif? The guy
+            who made jfif should quit his job we already have jpeg and png. I
+            had to convert it to jpeg to get it working.
           </p>
           <p>
             I need to write one more line, just to fill in the space. Maybe the

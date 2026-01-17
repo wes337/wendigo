@@ -18,7 +18,7 @@ export default function Home() {
       <div className={`${box}`}>
         <div>
           <div className="flex items-center gap-[4px] mb-[4px]">
-            <div className="font-bold">Latest Sample Pack</div>
+            <div className="font-bold">Latest Sample Packs</div>
             <Image
               className="w-[32px] h-[32px]"
               src={`/icons/new.png`}
@@ -29,14 +29,14 @@ export default function Home() {
             />
           </div>
           <div className="text-sm">
-            Download our latest sample pack! Its got samples of things you want
+            Download our latest sample packs! Its got samples of things you want
             to hear repeatedly. Like many times over and over in the background
             while you do the dishes or something.
           </div>
           <div className="flex flex-col mt-[8px]">
-            <div className="flex items-center text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5">
+            <div className="flex items-center whitespace-nowrap text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5">
               <Image
-                className="mt-[-2px] mr-[8px]"
+                className="mt-[-2px] mr-[2px]"
                 src={`/icons/small/inbox_download.png`}
                 width={16}
                 height={16}
@@ -44,6 +44,57 @@ export default function Home() {
                 unoptimized
               />
               Download sample_pack_1.24.zip (1.55 MB)
+            </div>
+            <div className="flex items-center whitespace-nowrap text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5">
+              <Image
+                className="mt-[-2px] mr-[2px]"
+                src={`/icons/small/inbox_download.png`}
+                width={16}
+                height={16}
+                alt=""
+                unoptimized
+              />
+              Download snares_2.00.zip (4.18 MB)
+            </div>
+            <div className="flex items-center mt-[8px]">
+              <div className="text-xs text-zinc-500">
+                Posted by{" "}
+                <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                  Wendigo
+                </span>{" "}
+                on 01/12/26 @ 10:15 a.m.
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr className="border-zinc-500/50 drop-shadow-md" />
+        <div>
+          <div className="flex items-center gap-[4px] mb-[4px]">
+            <div className="font-bold">Guitar Cab IRs</div>
+            <Image
+              className="w-[32px] h-[32px]"
+              src={`/icons/new.png`}
+              width={32}
+              height={32}
+              alt=""
+              unoptimized
+            />
+          </div>
+          <div className="text-sm">
+            Impulse responses of my Mesa Boogie 4x12 using a SM57 covered in
+            literal shit. Recorded inside an old shed behind the barn.
+          </div>
+          <div className="flex flex-col mt-[8px]">
+            <div className="flex items-center text-sm whitespace-nowrap font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5">
+              <Image
+                className="mt-[-2px] mr-[2px]"
+                src={`/icons/small/inbox_download.png`}
+                width={16}
+                height={16}
+                alt=""
+                unoptimized
+              />
+              Download mesa_brown_412.wav (9.87 MB)
             </div>
             <div className="flex items-center mt-[8px]">
               <div className="text-xs text-zinc-500">

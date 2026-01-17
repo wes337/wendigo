@@ -9,11 +9,15 @@ export default function Link({ href, icon, children }) {
   const pathname = usePathname();
 
   const active = pathname === href;
-  const background = "bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-200";
+  const background = active
+    ? "bg-blue-300/50 md:bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-200"
+    : "bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-200";
   const text = active
     ? "font-bold text-blue-600 leading-none hover:text-blue-700"
     : "font-bold text-zinc-800 leading-none hover:text-zinc-600";
-  const border = "border-1 border-zinc-500/50 rounded-[2px]";
+  const border = active
+    ? "border-1 border-blue-600/50 md:border-zinc-500/75 rounded-[2px]"
+    : "border-1 border-zinc-500/50 rounded-[2px]";
 
   return (
     <NextLink
