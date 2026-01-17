@@ -1,65 +1,122 @@
 import Image from "next/image";
+import { box } from "./styles";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="mt-5">
+      <div className="flex font-bold text-sm mb-2.5">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+          className="w-[16px] h-[16px] mr-1"
+          src={`/icons/small/newspaper.png`}
+          width={16}
+          height={16}
+          alt=""
+          unoptimized
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        News
+      </div>
+      <div className={`${box}`}>
+        <div>
+          <div className="flex items-center gap-[4px] mb-[4px]">
+            <div className="font-bold">Latest Sample Pack</div>
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              className="w-[32px] h-[32px]"
+              src={`/icons/new.png`}
+              width={32}
+              height={32}
+              alt=""
+              unoptimized
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <div className="text-sm">
+            Download our latest sample pack! Its got samples of things you want
+            to hear repeatedly. Like many times over and over in the background
+            while you do the dishes or something.
+          </div>
+          <div className="flex flex-col mt-[8px]">
+            <div className="flex items-center text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5">
+              <Image
+                className="mt-[-2px] mr-[8px]"
+                src={`/icons/small/inbox_download.png`}
+                width={16}
+                height={16}
+                alt=""
+                unoptimized
+              />
+              Download sample_pack_1.24.zip (1.55 MB)
+            </div>
+            <div className="flex items-center mt-[8px]">
+              <div className="text-xs text-zinc-500">
+                Posted by{" "}
+                <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                  Wendigo
+                </span>{" "}
+                on 01/12/26 @ 10:15 a.m.
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+        <hr className="border-zinc-500/50 drop-shadow-md" />
+        <div>
+          <div className="flex items-center gap-[4px] mb-[4px]">
+            <div className="font-bold">Job Position filled!</div>
+          </div>
+          <div className="text-sm">
+            After the tragic loss of Wendigo Corp&apos;s previous Marketing
+            Director Executive Support Specialist, we are pleased to announce
+            the role has once again been filled! We assure you we are doing our
+            best to ensure that incident never happens again. The families of
+            all involved have been consoled with free sample packs and have
+            mostly recovered.
+          </div>
+          <div className="flex mt-[8px]">
+            <div className="text-xs text-zinc-500">
+              Posted by{" "}
+              <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                Wendigo
+              </span>{" "}
+              on 03/10/02 @ 04:24 a.m.
+            </div>
+          </div>
+        </div>
+        <hr className="border-zinc-500/50 drop-shadow-md" />
+        <div>
+          <div className="flex items-center gap-[4px] mb-[4px]">
+            <div className="font-bold">Situation Stabilized</div>
+          </div>
+          <div className="text-sm">
+            Experts have assured us that there is nothing to be concerned about.
+            The situation at our office is under control. Please stop emailing
+            us. If you have any questions please feel free to email the other
+            guy.
+          </div>
+          <div className="flex items-center mt-[8px]">
+            <div className="text-xs text-zinc-500">
+              Posted by{" "}
+              <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                Wendigo
+              </span>{" "}
+              on 06/20/01 @ 3:41 p.m.
+            </div>
+          </div>
+        </div>
+        <hr className="border-zinc-500/50 drop-shadow-md" />
+        <div>
+          <div className="flex items-center gap-[4px] mb-[4px]">
+            <div className="font-bold">New Website</div>
+          </div>
+          <div className="text-sm">Hey guys welcome to our new website!</div>
+          <div className="flex items-center mt-[8px]">
+            <div className="text-xs text-zinc-500">
+              Posted by{" "}
+              <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                Wendigo
+              </span>{" "}
+              on 01/09/01 @ 6:00 p.m.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
