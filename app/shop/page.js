@@ -42,7 +42,7 @@ export default function Shop() {
 
   return (
     <>
-      <div className="mt-5 w-[600px] max-w-[90vw]">
+      <div className="mt-5 w-[600px] max-w-[90vw] text-zinc-900">
         <div className="flex font-bold text-sm mb-2.5">
           <Image
             className="w-[16px] h-[16px] mr-1"
@@ -102,7 +102,7 @@ export default function Shop() {
       </div>
       {currentProduct &&
         createPortal(
-          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-zinc-800/50 z-100">
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-zinc-800/50 z-100 text-zinc-900">
             <div className={`relative ${box} rounded-[4px]`}>
               <button
                 className="absolute top-[4px] right-[4px] cursor-pointer z-1"

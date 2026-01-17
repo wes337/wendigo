@@ -19,7 +19,7 @@ export default function Calendar() {
   const firstDay = getFirstDayOfMonth(today);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 text-zinc-900">
       <div className="flex font-bold text-sm mb-2.5">
         <Image
           className="w-[16px] h-[16px] mr-1"
