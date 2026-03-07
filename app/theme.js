@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
-import { dropShadow, insetShadow } from "./styles";
+import { cdn, dropShadow, insetShadow } from "@/app/styles";
 
 export default function Theme() {
   const [theme, setTheme] = useState("light");
@@ -26,34 +25,26 @@ export default function Theme() {
         }}
       >
         <div className="hidden md:flex">
-          <Image
+          <img
             className={`w-full h-full p-1 ${theme === "light" ? "opacity-100" : "opacity-0"}`}
-            src={"/icons/weather_sun.png"}
-            width={32}
-            height={32}
+            src={`${cdn}/icons/weather_sun.png`}
             alt=""
           />
-          <Image
+          <img
             className={`absolute top-0 left-0 w-full h-full p-1 ${theme === "dark" ? "opacity-100" : "opacity-0"}`}
-            src={"/icons/weather_moon_half.png"}
-            width={32}
-            height={32}
+            src={`${cdn}/icons/weather_moon_half.png`}
             alt=""
           />
         </div>
         <div className="flex md:hidden">
-          <Image
+          <img
             className={`w-full h-full p-1 ${theme === "light" ? "opacity-100" : "opacity-0"}`}
-            src={"/icons/small/weather_sun.png"}
-            width={16}
-            height={16}
+            src={`${cdn}/icons/small/weather_sun.png`}
             alt=""
           />
-          <Image
+          <img
             className={`absolute top-0 left-0 w-full h-full p-1 ${theme === "dark" ? "opacity-100" : "opacity-0"}`}
-            src={"/icons/small/weather_moon_half.png"}
-            width={16}
-            height={16}
+            src={`${cdn}/icons/small/weather_moon_half.png`}
             alt=""
           />
         </div>

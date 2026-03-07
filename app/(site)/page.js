@@ -1,0 +1,123 @@
+import { Fragment } from "react";
+import { box, cdn, siteWidth } from "@/app/styles";
+import Sql from "@/lib/sql";
+import Ticker from "@/app/(site)/ticker";
+
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+
+function formatDate(date) {
+  const d = new Date(date);
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const yy = String(d.getFullYear()).slice(-2);
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "p.m." : "a.m.";
+  hours = hours % 12 || 12;
+  return `${mm}/${dd}/${yy} @ ${hours}:${minutes} ${ampm}`;
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+export default async function Home() {
+  const posts = await Sql.client`
+    SELECT p.*,
+      COALESCE(
+        json_agg(json_build_object('name', f.name, 'size', f.size, 'url', f.url))
+        FILTER (WHERE f.id IS NOT NULL),
+        '[]'
+      ) as files
+    FROM posts p
+    LEFT JOIN post_files pf ON pf.post_id = p.id
+    LEFT JOIN files f ON f.id = pf.file_id
+    GROUP BY p.id
+    ORDER BY p.created_at DESC
+  `;
+  const upcomingEvents = await Sql.client`
+    SELECT * FROM events
+    WHERE date >= CURRENT_DATE
+    ORDER BY date ASC
+    LIMIT 10
+  `;
+  const now = Date.now();
+
+  return (
+    <div className={`mt-5 md:mt-8 text-zinc-900 ${siteWidth}`}>
+      {upcomingEvents.length > 0 && (
+        <>
+          <div className="flex font-bold text-sm mb-2.5">
+            <img
+              className="w-[16px] h-[16px] mr-1"
+              src={`${cdn}/icons/small/calendar.png`}
+              alt=""
+            />
+            Upcoming Events
+          </div>
+          <Ticker events={upcomingEvents} />
+        </>
+      )}
+      <div className="flex font-bold text-sm mb-2.5 mt-5 md:mt-8">
+        <img
+          className="w-[16px] h-[16px] mr-1"
+          src={`${cdn}/icons/small/newspaper.png`}
+          alt=""
+        />
+        News
+      </div>
+      <div className={box}>
+        {posts.map((post, i) => (
+          <Fragment key={post.id}>
+            {i > 0 && <hr className="border-zinc-500/50 drop-shadow-md" />}
+            <div>
+              <div className="flex items-center gap-[4px] mb-[4px]">
+                <div className="font-bold">{post.title}</div>
+                {now - new Date(post.created_at).getTime() < SEVEN_DAYS && (
+                  <img
+                    className="w-[32px] h-[32px]"
+                    src={`${cdn}/icons/new.png`}
+                    alt=""
+                  />
+                )}
+              </div>
+              <div className="about-prose text-sm" dangerouslySetInnerHTML={{ __html: post.content }} />
+              {post.files.length > 0 && (
+                <div className="flex flex-col mt-[8px]">
+                  {post.files.map((file, j) => (
+                    <a
+                      key={j}
+                      href={file.url}
+                      className="flex items-center whitespace-nowrap text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5"
+                    >
+                      <img
+                        className="mt-[-2px] mr-1"
+                        src={`${cdn}/icons/small/inbox_download.png`}
+                        alt=""
+                      />
+                      <span className="hidden md:inline">Download&nbsp;</span>{file.name} ({formatSize(Number(file.size))})
+                    </a>
+                  ))}
+                </div>
+              )}
+              <div className="flex items-center mt-[8px]">
+                <div className="text-xs text-zinc-500">
+                  Posted by{" "}
+                  <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                    {post.author}
+                  </span>{" "}
+                  on {formatDate(post.created_at)}
+                </div>
+              </div>
+            </div>
+          </Fragment>
+        ))}
+        {posts.length === 0 && (
+          <div className="text-sm text-zinc-500">No posts yet.</div>
+        )}
+      </div>
+    </div>
+  );
+}

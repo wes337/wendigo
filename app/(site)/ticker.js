@@ -1,0 +1,64 @@
+"use client";
+
+import Link from "next/link";
+import { cdn, dropShadow, insetShadow } from "@/app/styles";
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+});
+
+function EventItem({ event }) {
+  return (
+    <Link
+      href="/calendar"
+      className="flex items-center gap-1.5 shrink-0 group"
+    >
+      <img
+        className={`w-[16px] h-[16px] ${dropShadow}`}
+        src={`${cdn}/icons/small/${event.icon}.png`}
+        alt=""
+      />
+      <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700 uppercase tracking-wide">
+        {event.name}
+      </span>
+      <span className="text-[10px] text-zinc-500 font-bold">
+        {dateFormatter.format(new Date(event.date))}
+      </span>
+      <span className="text-zinc-400 text-xs ml-2">|</span>
+    </Link>
+  );
+}
+
+export default function Ticker({ events }) {
+  if (events.length === 0) return null;
+
+  const wrapper = `relative ${insetShadow} w-full max-w-[90vw] md:max-w-[720px] overflow-hidden bg-gradient-to-bl from-zinc-300 via-zinc-200 to-zinc-300 border-1 border-zinc-500/50 rounded-[2px]`;
+
+  // Few events: just show them static, no scroll
+  if (events.length <= 3) {
+    return (
+      <div className={wrapper}>
+        <div className="flex items-center justify-center gap-6 py-2 px-4 whitespace-nowrap">
+          {events.map((event) => (
+            <EventItem key={event.id} event={event} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Enough events to scroll: duplicate for seamless loop
+  return (
+    <div className={wrapper}>
+      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-zinc-200 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-zinc-200 to-transparent z-10 pointer-events-none" />
+
+      <div className="flex items-center gap-6 py-2 px-4 animate-ticker whitespace-nowrap">
+        {[...events, ...events].map((event, i) => (
+          <EventItem key={`${event.id}-${i}`} event={event} />
+        ))}
+      </div>
+    </div>
+  );
+}

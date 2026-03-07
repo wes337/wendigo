@@ -2,8 +2,7 @@
 
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { insetShadow, dropShadow } from "@/app/styles";
-import Image from "next/image";
+import { cdn, insetShadow, dropShadow } from "@/app/styles";
 
 export default function Link({ href, icon, children }) {
   const pathname = usePathname();
@@ -25,21 +24,15 @@ export default function Link({ href, icon, children }) {
       className={`flex items-center justify-center h-[56px] w-[56px] md:h-auto md:w-full md:p-2.5 md:px-5 text-md md:text-xs 3xl:text-md md:gap-2 md:justify-center text-center ${background} ${text} ${border} ${insetShadow} ${dropShadow}`}
       href={href}
     >
-      <Image
+      <img
         className="hidden md:inline-flex w-[16px] h-[16px] -mt-[2px]"
-        src={`/icons/small/${icon}.png`}
-        width={16}
-        height={16}
+        src={`${cdn}/icons/small/${icon}.png`}
         alt=""
-        unoptimized
       />
-      <Image
+      <img
         className="md:hidden w-[32px] h-[32px]"
-        src={`/icons/${icon}.png`}
-        width={32}
-        height={32}
+        src={`${cdn}/icons/${icon}.png`}
         alt=""
-        unoptimized
       />
       <div className="hidden md:inline-flex w-full">{children}</div>
     </NextLink>
