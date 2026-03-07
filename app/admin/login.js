@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/admin/actions";
-import { box, input, btn, siteWidth } from "@/app/styles";
+import Link from "next/link";
+import { box, input, btn, siteWidth, insetShadow } from "@/app/styles";
 
 export default function LoginForm() {
   const [error, setError] = useState(null);
@@ -21,7 +22,15 @@ export default function LoginForm() {
 
   return (
     <div className={`mt-5 text-zinc-900 ${siteWidth}`}>
-      <div className="flex font-bold text-sm mb-2.5">Admin Login</div>
+      <div className="flex items-center justify-between font-bold text-sm mb-2.5">
+        Admin Login
+        <Link
+          href="/"
+          className={`text-xs md:text-sm font-bold text-white hover:brightness-110 px-2.5 py-1.5 md:px-3 md:py-2 bg-gradient-to-bl from-[var(--t-submit-from)] via-[var(--t-submit-via)] to-[var(--t-submit-to)] border-1 border-[var(--t-submit-border)] rounded-[4px] drop-shadow-md ${insetShadow}`}
+        >
+          Back to Site
+        </Link>
+      </div>
       <form action={handleSubmit} className={box}>
         <input
           name="password"
