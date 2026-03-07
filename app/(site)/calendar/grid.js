@@ -40,7 +40,7 @@ export default function CalendarGrid({ year, month, days, firstDay, currentDay, 
         {weekdays.map((day) => (
           <div
             key={day}
-            className="text-xs text-center font-bold w-full text-zinc-700"
+            className="text-xs text-center font-bold w-full text-[var(--t-text)]"
           >
             {day}
           </div>
@@ -57,10 +57,10 @@ export default function CalendarGrid({ year, month, days, firstDay, currentDay, 
           const colors = event ? COLOR_MAP[event.color] || COLOR_MAP.blue : null;
 
           const text = isCurrentDay
-            ? "font-bold text-zinc-500 border-zinc-600"
+            ? "font-bold text-[var(--t-text-muted)] border-[var(--t-panel-border)]"
             : event
               ? `${colors.text} ${colors.border}`
-              : "text-zinc-500 border-zinc-700/50";
+              : "text-[var(--t-text-muted)] border-[var(--t-panel-border)]";
 
           const link = event
             ? `${colors.bg} cursor-pointer ${colors.hover}`
@@ -104,11 +104,11 @@ export default function CalendarGrid({ year, month, days, firstDay, currentDay, 
       {selectedEvent &&
         createPortal(
           <div
-            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-zinc-800/50 z-100 text-zinc-900"
+            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-zinc-800/50 z-100 text-[var(--t-text)]"
             onClick={() => setSelectedEvent(null)}
           >
             <div
-              className={`relative flex flex-col p-5 gap-5 w-full max-w-[375px] bg-gradient-to-bl from-zinc-300 via-zinc-200 to-zinc-300 rounded-[4px] border-1 border-zinc-500/50 drop-shadow-md ${insetShadow}`}
+              className={`relative flex flex-col p-5 gap-5 w-full max-w-[375px] bg-gradient-to-bl from-[var(--t-panel-from)] via-[var(--t-panel-via)] to-[var(--t-panel-to)] rounded-[4px] border-1 border-[var(--t-panel-border)] drop-shadow-md ${insetShadow}`}
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -129,7 +129,7 @@ export default function CalendarGrid({ year, month, days, firstDay, currentDay, 
                 />
                 <div>
                   <div className="font-bold">{selectedEvent.name}</div>
-                  <div className="text-xs text-zinc-500">
+                  <div className="text-xs text-[var(--t-text-muted)]">
                     {dateFormatter.format(new Date(selectedEvent.date))}
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function CalendarGrid({ year, month, days, firstDay, currentDay, 
                 <a
                   href={selectedEvent.url}
                   target="_blank"
-                  className="flex items-center text-sm text-blue-600 hover:underline truncate"
+                  className="flex items-center text-sm text-[var(--t-accent)] hover:underline truncate"
                 >
                   <img
                     className="w-[16px] h-[16px] mr-1 shrink-0"

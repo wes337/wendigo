@@ -17,7 +17,7 @@ export default async function Calendar() {
   const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
 
   return (
-    <div className={`mt-5 text-zinc-900 ${siteWidth}`}>
+    <div className={`mt-5 text-[var(--t-text)] ${siteWidth}`}>
       <div className="flex font-bold text-sm mb-2.5">
         <img
           className="w-[16px] h-[16px] mr-1"

@@ -19,13 +19,13 @@ function EventItem({ event }) {
         src={`${cdn}/icons/small/${event.icon}.png`}
         alt=""
       />
-      <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700 uppercase tracking-wide">
+      <span className="text-xs font-bold text-[var(--t-accent)] group-hover:text-[var(--t-accent-hover)] uppercase tracking-wide">
         {event.name}
       </span>
-      <span className="text-[10px] text-zinc-500 font-bold">
+      <span className="text-[10px] text-[var(--t-text-muted)] font-bold">
         {dateFormatter.format(new Date(event.date))}
       </span>
-      <span className="text-zinc-400 text-xs ml-2">|</span>
+      <span className="text-[var(--t-text-muted)] text-xs ml-2">|</span>
     </Link>
   );
 }
@@ -33,7 +33,7 @@ function EventItem({ event }) {
 export default function Ticker({ events }) {
   if (events.length === 0) return null;
 
-  const wrapper = `relative ${insetShadow} w-full max-w-[90vw] md:max-w-[720px] overflow-hidden bg-gradient-to-bl from-zinc-300 via-zinc-200 to-zinc-300 border-1 border-zinc-500/50 rounded-[2px]`;
+  const wrapper = `relative ${insetShadow} w-full max-w-[90vw] md:max-w-[720px] overflow-hidden bg-gradient-to-bl from-[var(--t-panel-from)] via-[var(--t-panel-via)] to-[var(--t-panel-to)] border-1 border-[var(--t-panel-border)] rounded-[2px]`;
 
   // Few events: just show them static, no scroll
   if (events.length <= 3) {
@@ -51,8 +51,8 @@ export default function Ticker({ events }) {
   // Enough events to scroll: duplicate for seamless loop
   return (
     <div className={wrapper}>
-      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-zinc-200 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-zinc-200 to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[var(--t-panel-via)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[var(--t-panel-via)] to-transparent z-10 pointer-events-none" />
 
       <div className="flex items-center gap-6 py-2 px-4 animate-ticker whitespace-nowrap">
         {[...events, ...events].map((event, i) => (

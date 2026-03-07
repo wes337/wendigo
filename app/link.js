@@ -9,14 +9,14 @@ export default function Link({ href, icon, children }) {
 
   const active = pathname === href;
   const background = active
-    ? "bg-blue-300/50 md:bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-200"
-    : "bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-200";
+    ? "bg-[var(--t-btn-hover)] md:bg-[var(--t-btn-bg)] hover:bg-[var(--t-btn-hover)] active:bg-[var(--t-btn-hover)]"
+    : "bg-[var(--t-btn-bg)] hover:bg-[var(--t-btn-hover)] active:bg-[var(--t-btn-hover)]";
   const text = active
-    ? "font-bold text-blue-600 leading-none hover:text-blue-700"
-    : "font-bold text-zinc-800 leading-none hover:text-zinc-600";
+    ? "font-bold text-[var(--t-accent)] leading-none hover:text-[var(--t-accent-hover)]"
+    : "font-bold text-[var(--t-text)] leading-none hover:text-[var(--t-text-muted)]";
   const border = active
-    ? "border-1 border-blue-600/50 md:border-zinc-500/75 rounded-[2px]"
-    : "border-1 border-zinc-500/50 rounded-[2px]";
+    ? "border-1 border-[var(--t-accent)]/50 md:border-[var(--t-panel-border)] rounded-[2px]"
+    : "border-1 border-[var(--t-panel-border)] rounded-[2px]";
 
   return (
     <NextLink

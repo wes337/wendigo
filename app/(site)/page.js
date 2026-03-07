@@ -46,7 +46,7 @@ export default async function Home() {
   const now = Date.now();
 
   return (
-    <div className={`mt-5 md:mt-8 text-zinc-900 ${siteWidth}`}>
+    <div className={`mt-5 md:mt-8 text-[var(--t-text)] ${siteWidth}`}>
       {upcomingEvents.length > 0 && (
         <>
           <div className="flex font-bold text-sm mb-2.5">
@@ -71,7 +71,7 @@ export default async function Home() {
       <div className={box}>
         {posts.map((post, i) => (
           <Fragment key={post.id}>
-            {i > 0 && <hr className="border-zinc-500/50 drop-shadow-md" />}
+            {i > 0 && <hr className="border-[var(--t-panel-border)] drop-shadow-md" />}
             <div>
               <div className="flex items-center gap-[4px] mb-[4px]">
                 <div className="font-bold">{post.title}</div>
@@ -90,7 +90,7 @@ export default async function Home() {
                     <a
                       key={j}
                       href={file.url}
-                      className="flex items-center whitespace-nowrap text-sm font-bold cursor-pointer text-blue-600 hover:underline active:underline mb-2.5"
+                      className="flex items-center whitespace-nowrap text-sm font-bold cursor-pointer text-[var(--t-accent)] hover:underline active:underline mb-2.5"
                     >
                       <img
                         className="mt-[-2px] mr-1"
@@ -103,7 +103,7 @@ export default async function Home() {
                 </div>
               )}
               <div className="flex items-center mt-[8px]">
-                <div className="text-xs text-zinc-500">
+                <div className="text-xs text-[var(--t-text-muted)]">
                   Posted by{" "}
                   <span className="text-xs text-orange-600 font-bold cursor-pointer hover:underline active:underline">
                     {post.author}
@@ -115,7 +115,7 @@ export default async function Home() {
           </Fragment>
         ))}
         {posts.length === 0 && (
-          <div className="text-sm text-zinc-500">No posts yet.</div>
+          <div className="text-sm text-[var(--t-text-muted)]">No posts yet.</div>
         )}
       </div>
     </div>
