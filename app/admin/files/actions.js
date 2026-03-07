@@ -10,11 +10,11 @@ export async function remove(formData) {
   await requireAuth();
 
   const id = formData.get("id");
-  const [file] = await Sql.client`SELECT * FROM files WHERE id = ${id}`;
+  const [file] = await Sql.client`SELECT * FROM wendigo.files WHERE id = ${id}`;
 
   if (file) {
     await deleteFile(file.key);
-    await Sql.client`DELETE FROM files WHERE id = ${id}`;
+    await Sql.client`DELETE FROM wendigo.files WHERE id = ${id}`;
   }
 
   revalidatePath("/admin/files");

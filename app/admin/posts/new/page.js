@@ -4,7 +4,7 @@ import PostForm from "@/app/admin/posts/form";
 import Sql from "@/lib/sql";
 
 export default async function NewPost() {
-  const files = await Sql.client`SELECT * FROM files ORDER BY created_at DESC`;
+  const files = await Sql.client`SELECT * FROM wendigo.files ORDER BY created_at DESC`;
 
   return (
     <div className={`mt-5 text-zinc-900 ${siteWidth}`}>

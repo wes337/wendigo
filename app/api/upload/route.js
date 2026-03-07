@@ -54,7 +54,7 @@ export async function POST(request) {
   const url = `https://${CDN_HOST}/wendigo/${key}`;
 
   const [file] = await Sql.client`
-    INSERT INTO files (name, key, size, url)
+    INSERT INTO wendigo.files (name, key, size, url)
     VALUES (${filename}, ${key}, ${filesize}, ${url})
     RETURNING *
   `;

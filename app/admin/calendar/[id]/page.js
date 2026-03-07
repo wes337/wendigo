@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export default async function EditEvent({ params }) {
   const { id } = await params;
-  const [event] = await Sql.client`SELECT * FROM events WHERE id = ${id}`;
+  const [event] = await Sql.client`SELECT * FROM wendigo.events WHERE id = ${id}`;
 
   if (!event) redirect("/admin/calendar");
 

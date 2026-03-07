@@ -8,12 +8,12 @@ import { redirect } from "next/navigation";
 
 export default async function EditPost({ params }) {
   const { id } = await params;
-  const [post] = await Sql.client`SELECT * FROM posts WHERE id = ${id}`;
+  const [post] = await Sql.client`SELECT * FROM wendigo.posts WHERE id = ${id}`;
 
   if (!post) redirect("/admin");
 
-  const files = await Sql.client`SELECT * FROM files ORDER BY created_at DESC`;
-  const attached = await Sql.client`SELECT file_id FROM post_files WHERE post_id = ${id}`;
+  const files = await Sql.client`SELECT * FROM wendigo.files ORDER BY created_at DESC`;
+  const attached = await Sql.client`SELECT file_id FROM wendigo.post_files WHERE post_id = ${id}`;
   post.fileIds = attached.map((r) => r.file_id);
 
   return (

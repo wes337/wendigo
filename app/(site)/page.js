@@ -31,14 +31,14 @@ export default async function Home() {
         FILTER (WHERE f.id IS NOT NULL),
         '[]'
       ) as files
-    FROM posts p
-    LEFT JOIN post_files pf ON pf.post_id = p.id
-    LEFT JOIN files f ON f.id = pf.file_id
+    FROM wendigo.posts p
+    LEFT JOIN wendigo.post_files pf ON pf.post_id = p.id
+    LEFT JOIN wendigo.files f ON f.id = pf.file_id
     GROUP BY p.id
     ORDER BY p.created_at DESC
   `;
   const upcomingEvents = await Sql.client`
-    SELECT * FROM events
+    SELECT * FROM wendigo.events
     WHERE date >= CURRENT_DATE
     ORDER BY date ASC
     LIMIT 10

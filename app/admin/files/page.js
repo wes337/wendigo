@@ -17,9 +17,9 @@ export default async function Files() {
         json_agg(p.title) FILTER (WHERE p.id IS NOT NULL),
         '[]'
       ) as post_titles
-    FROM files f
-    LEFT JOIN post_files pf ON pf.file_id = f.id
-    LEFT JOIN posts p ON p.id = pf.post_id
+    FROM wendigo.files f
+    LEFT JOIN wendigo.post_files pf ON pf.file_id = f.id
+    LEFT JOIN wendigo.posts p ON p.id = pf.post_id
     GROUP BY f.id
     ORDER BY f.created_at DESC
   `;

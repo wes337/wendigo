@@ -11,17 +11,17 @@ export async function updatePage(_, formData) {
   const content = formData.get("content") ?? "";
 
   const existing =
-    await Sql.client`SELECT id FROM pages WHERE slug = ${slug}`;
+    await Sql.client`SELECT id FROM wendigo.pages WHERE slug = ${slug}`;
 
   if (existing.length > 0) {
     await Sql.client`
-      UPDATE pages
+      UPDATE wendigo.pages
       SET content = ${content}, updated_at = NOW()
       WHERE slug = ${slug}
     `;
   } else {
     await Sql.client`
-      INSERT INTO pages (slug, title, content)
+      INSERT INTO wendigo.pages (slug, title, content)
       VALUES (${slug}, ${slug}, ${content})
     `;
   }

@@ -5,7 +5,7 @@ import { deleteInquiry } from "@/app/admin/inquiries/actions";
 import DeleteButton from "@/app/admin/delete-button";
 
 export default async function InquiriesAdmin() {
-  const inquiries = await Sql.client`SELECT * FROM inquiries ORDER BY created_at DESC`;
+  const inquiries = await Sql.client`SELECT * FROM wendigo.inquiries ORDER BY created_at DESC`;
 
   return (
     <div className={`mt-5 text-zinc-900 overflow-hidden ${siteWidth}`}>

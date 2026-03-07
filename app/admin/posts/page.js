@@ -5,7 +5,7 @@ import { box, btn, listRow, siteWidth } from "@/app/styles";
 import Sql from "@/lib/sql";
 
 export default async function Posts() {
-  const posts = await Sql.client`SELECT * FROM posts ORDER BY created_at DESC`;
+  const posts = await Sql.client`SELECT * FROM wendigo.posts ORDER BY created_at DESC`;
 
   return (
     <div className={`mt-5 text-zinc-900 overflow-hidden ${siteWidth}`}>

@@ -3,7 +3,7 @@ import Sql from "@/lib/sql";
 import AboutForm from "@/app/admin/about/form";
 
 export default async function AboutAdmin() {
-  const rows = await Sql.client`SELECT * FROM pages WHERE slug = 'about'`;
+  const rows = await Sql.client`SELECT * FROM wendigo.pages WHERE slug = 'about'`;
   const page = rows[0] ?? null;
 
   return (

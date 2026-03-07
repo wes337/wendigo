@@ -5,7 +5,7 @@ import { deleteEvent } from "@/app/admin/calendar/actions";
 import DeleteButton from "@/app/admin/delete-button";
 
 export default async function CalendarAdmin() {
-  const events = await Sql.client`SELECT * FROM events ORDER BY date DESC`;
+  const events = await Sql.client`SELECT * FROM wendigo.events ORDER BY date DESC`;
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);

@@ -9,7 +9,7 @@ export async function deleteInquiry(formData) {
   await requireAuth();
 
   const id = formData.get("id");
-  await Sql.client`DELETE FROM inquiries WHERE id = ${id}`;
+  await Sql.client`DELETE FROM wendigo.inquiries WHERE id = ${id}`;
 
   revalidatePath("/admin/inquiries");
   redirect("/admin/inquiries");

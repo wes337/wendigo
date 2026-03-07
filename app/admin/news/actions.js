@@ -24,7 +24,7 @@ export async function createArticle(_, formData) {
   const { title, content, author } = result;
 
   await Sql.client`
-    INSERT INTO articles (title, content, author)
+    INSERT INTO wendigo.articles (title, content, author)
     VALUES (${title}, ${content}, ${author})
   `;
 
@@ -41,7 +41,7 @@ export async function updateArticle(_, formData) {
   const { title, content, author } = result;
 
   await Sql.client`
-    UPDATE articles
+    UPDATE wendigo.articles
     SET title = ${title}, content = ${content}, author = ${author}
     WHERE id = ${id}
   `;
@@ -54,7 +54,7 @@ export async function deleteArticle(formData) {
   await requireAuth();
 
   const id = formData.get("id");
-  await Sql.client`DELETE FROM articles WHERE id = ${id}`;
+  await Sql.client`DELETE FROM wendigo.articles WHERE id = ${id}`;
 
   revalidatePath("/news");
   redirect("/admin/news");

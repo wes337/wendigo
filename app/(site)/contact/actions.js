@@ -1,11 +1,34 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
 import Sql from "@/lib/sql";
+import Redis from "@/lib/redis";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const RATE_LIMIT = 3;
+const RATE_WINDOW = 60 * 15; // 15 minutes
+
+async function isRateLimited(ip) {
+  try {
+    const key = `ratelimit:contact:${ip}`;
+    const count = await Redis.client.incr(key);
+    if (count === 1) await Redis.client.expire(key, RATE_WINDOW);
+    return count > RATE_LIMIT;
+  } catch {
+    return false;
+  }
+}
+
 export async function sendInquiry(_, formData) {
+  const headerStore = await headers();
+  const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+  if (await isRateLimited(ip)) {
+    return { error: "Too many inquiries. Please try again later." };
+  }
+
   const name = formData.get("name")?.trim()?.slice(0, 100);
   const email = formData.get("email")?.trim()?.slice(0, 320);
   const message = formData.get("message")?.trim()?.slice(0, 5000);
@@ -20,7 +43,7 @@ export async function sendInquiry(_, formData) {
 
   try {
     await Sql.client`
-      INSERT INTO inquiries (name, email, message)
+      INSERT INTO wendigo.inquiries (name, email, message)
       VALUES (${name}, ${email}, ${message})
     `;
 

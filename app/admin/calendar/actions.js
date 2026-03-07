@@ -36,7 +36,7 @@ export async function createEvent(_, formData) {
   const { name, description, date, url, icon, color } = result;
 
   await Sql.client`
-    INSERT INTO events (name, description, date, url, icon, color)
+    INSERT INTO wendigo.events (name, description, date, url, icon, color)
     VALUES (${name}, ${description}, ${date}, ${url}, ${icon}, ${color})
   `;
 
@@ -53,7 +53,7 @@ export async function updateEvent(_, formData) {
   const { name, description, date, url, icon, color } = result;
 
   await Sql.client`
-    UPDATE events
+    UPDATE wendigo.events
     SET name = ${name}, description = ${description}, date = ${date}, url = ${url}, icon = ${icon}, color = ${color}
     WHERE id = ${id}
   `;
@@ -66,7 +66,7 @@ export async function deleteEvent(formData) {
   await requireAuth();
 
   const id = formData.get("id");
-  await Sql.client`DELETE FROM events WHERE id = ${id}`;
+  await Sql.client`DELETE FROM wendigo.events WHERE id = ${id}`;
 
   revalidatePath("/calendar");
   redirect("/admin/calendar");

@@ -2,7 +2,7 @@ import { box, cdn } from "@/app/styles";
 import Sql from "@/lib/sql";
 
 export default async function About() {
-  const rows = await Sql.client`SELECT content FROM pages WHERE slug = 'about'`;
+  const rows = await Sql.client`SELECT content FROM wendigo.pages WHERE slug = 'about'`;
   const content = rows[0]?.content ?? "";
 
   return (

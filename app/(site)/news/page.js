@@ -2,7 +2,7 @@ import { box, cdn, siteWidth } from "@/app/styles";
 import Sql from "@/lib/sql";
 
 export default async function News() {
-  const articles = await Sql.client`SELECT * FROM articles ORDER BY created_at DESC`;
+  const articles = await Sql.client`SELECT * FROM wendigo.articles ORDER BY created_at DESC`;
 
   return (
     <div className={`mt-5 text-zinc-900 ${siteWidth}`}>

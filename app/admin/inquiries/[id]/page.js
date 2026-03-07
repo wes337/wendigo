@@ -7,7 +7,7 @@ import DeleteButton from "@/app/admin/delete-button";
 
 export default async function ViewInquiry({ params }) {
   const { id } = await params;
-  const [inquiry] = await Sql.client`SELECT * FROM inquiries WHERE id = ${id}`;
+  const [inquiry] = await Sql.client`SELECT * FROM wendigo.inquiries WHERE id = ${id}`;
 
   if (!inquiry) redirect("/admin/inquiries");
 

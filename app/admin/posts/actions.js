@@ -25,14 +25,14 @@ export async function createPost(_, formData) {
   const { title, content, author, fileIds } = result;
 
   const [{ id }] = await Sql.client`
-    INSERT INTO posts (title, content, author)
+    INSERT INTO wendigo.posts (title, content, author)
     VALUES (${title}, ${content}, ${author})
     RETURNING id
   `;
 
   if (fileIds.length > 0) {
     await Sql.client`
-      INSERT INTO post_files (post_id, file_id)
+      INSERT INTO wendigo.post_files (post_id, file_id)
       SELECT ${id}, unnest(${fileIds}::int[])
     `;
   }
@@ -50,15 +50,15 @@ export async function updatePost(_, formData) {
   const { title, content, author, fileIds } = result;
 
   await Sql.client`
-    UPDATE posts
+    UPDATE wendigo.posts
     SET title = ${title}, content = ${content}, author = ${author}
     WHERE id = ${id}
   `;
 
-  await Sql.client`DELETE FROM post_files WHERE post_id = ${id}`;
+  await Sql.client`DELETE FROM wendigo.post_files WHERE post_id = ${id}`;
   if (fileIds.length > 0) {
     await Sql.client`
-      INSERT INTO post_files (post_id, file_id)
+      INSERT INTO wendigo.post_files (post_id, file_id)
       SELECT ${id}, unnest(${fileIds}::int[])
     `;
   }
@@ -71,7 +71,7 @@ export async function deletePost(formData) {
   await requireAuth();
 
   const id = formData.get("id");
-  await Sql.client`DELETE FROM posts WHERE id = ${id}`;
+  await Sql.client`DELETE FROM wendigo.posts WHERE id = ${id}`;
 
   revalidatePath("/");
   redirect("/admin/posts");

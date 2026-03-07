@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export default async function EditArticle({ params }) {
   const { id } = await params;
-  const [article] = await Sql.client`SELECT * FROM articles WHERE id = ${id}`;
+  const [article] = await Sql.client`SELECT * FROM wendigo.articles WHERE id = ${id}`;
 
   if (!article) redirect("/admin/news");
 

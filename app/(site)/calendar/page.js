@@ -8,7 +8,7 @@ const yearFormatter = new Intl.DateTimeFormat("en-US", { year: "numeric" });
 
 export default async function Calendar() {
   const events = await Sql.client`
-    SELECT * FROM events
+    SELECT * FROM wendigo.events
     WHERE date >= ${new Date(today.getFullYear(), today.getMonth(), 1)}
       AND date < ${new Date(today.getFullYear(), today.getMonth() + 1, 1)}
   `;
