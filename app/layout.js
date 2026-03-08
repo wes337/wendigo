@@ -14,8 +14,8 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased">
         <Theme />
-        <div className="fixed top-0 left-0 w-full h-full pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/little-knobs.png')] opacity-10 z-0" />
-        <div className="relative flex flex-col min-h-screen items-center justify-center font-sans z-1">
+        <div className="fixed top-0 left-0 w-full h-full pointer-events-none bg-[url('/backgrounds/little-knobs.png')] opacity-10 z-0" />
+        <div className="relative flex flex-col min-h-dvh items-center justify-center font-sans z-1">
           {children}
         </div>
       </body>

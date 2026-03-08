@@ -37,18 +37,25 @@ export default function SiteLayout({ children }) {
           <Slogan />
         </div>
       </div>
-      <div className={box}>
-        <div className="flex w-full items-center justify-evenly gap-2.5 md:gap-5">
-          {LINKS.map((link) => {
-            return (
-              <NavLink key={link.label} href={link.href} icon={link.icon}>
-                {link.label}
-              </NavLink>
-            );
-          })}
+      {/* Desktop nav */}
+      <div className={`hidden md:flex ${box}`}>
+        <div className="flex w-full items-center justify-evenly gap-5">
+          {LINKS.map((link) => (
+            <NavLink key={link.label} href={link.href} icon={link.icon}>
+              {link.label}
+            </NavLink>
+          ))}
         </div>
       </div>
       {children}
+      {/* Mobile fixed bottom bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-evenly bg-gradient-to-t from-[var(--t-panel-from)] via-[var(--t-panel-via)] to-[var(--t-panel-to)] border-t-1 border-[var(--t-panel-border)] pb-[env(safe-area-inset-bottom)]">
+        {LINKS.map((link, i) => (
+          <NavLink key={link.label} href={link.href} icon={link.icon} isLast={i === LINKS.length - 1}>
+            {link.label}
+          </NavLink>
+        ))}
+      </div>
       <div className="w-full text-center py-5 text-[12px] text-[var(--t-text-muted)] mt-auto">
         <div className="flex items-center justify-center gap-2.5">
           <NextLink href="/contact" className="text-[var(--t-accent)] text-[10px] font-bold uppercase cursor-pointer hover:underline active:underline">
@@ -61,6 +68,7 @@ export default function SiteLayout({ children }) {
         <div>Copyright © 2001-2026 Wendigo Corp All Rights Reserved</div>
         <div className="text-[9px] opacity-50 uppercase">Powered by WesWare 2.1 (PRO Edition)</div>
       </div>
+      <div className="md:hidden h-16" />
     </>
   );
 }

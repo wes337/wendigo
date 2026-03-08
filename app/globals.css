@@ -58,6 +58,13 @@ body {
   scrollbar-gutter: stable both-edges;
 }
 
+/* Safari fallback for dvh */
+@supports (-webkit-touch-callout: none) {
+  .min-h-dvh {
+    min-height: -webkit-fill-available;
+  }
+}
+
 body::before {
   content: "";
   position: fixed;

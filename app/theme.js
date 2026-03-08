@@ -61,10 +61,10 @@ export default function Theme() {
               alt="Theme"
             />
           </div>
-          <div className="flex md:hidden">
+          <div className="flex md:hidden p-1">
             <img
-              className="w-full h-full p-1"
-              src={`${cdn}/icons/small/palette.png`}
+              className="w-[32px] h-[32px]"
+              src={`${cdn}/icons/palette.png`}
               alt="Theme"
             />
           </div>
