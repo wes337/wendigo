@@ -5,6 +5,8 @@ import AdminNav from "@/app/admin/nav";
 import LoginForm from "@/app/admin/login";
 import { insetShadow } from "@/app/styles";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminLayout({ children }) {
   if (!(await isAuthed())) return <LoginForm />;
 
