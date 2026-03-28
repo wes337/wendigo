@@ -3,6 +3,8 @@ import NavLink from "@/app/link";
 import Slogan from "@/app/slogan";
 import { box, cdn } from "@/app/styles";
 
+export const dynamic = "force-dynamic";
+
 const LINKS = [
   { label: "Home", href: "/", icon: "house" },
   { label: "About", href: "/about", icon: "information" },
