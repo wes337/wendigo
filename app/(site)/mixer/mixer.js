@@ -76,7 +76,11 @@ export default function Mixer({ songs, initialIndex = 0 }) {
     return audioCtxRef.current;
   }
 
+  const loadingRef = useRef(false);
+
   async function loadBuffers() {
+    if (loadingRef.current) return;
+    loadingRef.current = true;
     const ctx = getAudioCtx();
     setLoading(true);
     setLoaded(0);
@@ -92,10 +96,11 @@ export default function Mixer({ songs, initialIndex = 0 }) {
             const res = await fetch(track.url);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const arrayBuf = await res.arrayBuffer();
-            if (arrayBuf.byteLength === 0) throw new Error("Empty response");
+            const bytes = arrayBuf.byteLength;
+            if (bytes === 0) throw new Error("Empty response");
             const audioBuf = await ctx.decodeAudioData(arrayBuf);
             buffersRef.current[key] = audioBuf;
-            const mb = (arrayBuf.byteLength / 1048576).toFixed(1);
+            const mb = (bytes / 1048576).toFixed(1);
             setLoadLog((prev) => [...prev, `  ✓ "${track.label}" loaded (${mb}MB, ${audioBuf.duration.toFixed(1)}s)`]);
           } catch (e) {
             console.error(`Failed to load "${track.label}":`, e);
@@ -129,6 +134,7 @@ export default function Mixer({ songs, initialIndex = 0 }) {
     }
 
     setLoading(false);
+    loadingRef.current = false;
   }
 
   const applyGains = useCallback(() => {
@@ -351,8 +357,11 @@ export default function Mixer({ songs, initialIndex = 0 }) {
     analysersRef.current = {};
     canvasRefs.current = {};
     pausedAtRef.current = 0;
+    loadingRef.current = false;
     setPlaying(false);
+    setLoading(false);
     setCurrentTime(0);
+    setLoadLog([]);
     setSongIndex(Number(e.target.value));
   }
 
@@ -515,7 +524,7 @@ export default function Mixer({ songs, initialIndex = 0 }) {
                 <div
                   className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 px-2.5 py-2 bg-[var(--t-row-even)] border-1 border-[var(--t-panel-border)] rounded-b-[2px] shadow-sm"
                 >
-                {/* Label */}
+                {/* Label + Mute/Solo (same row on mobile) */}
                 <div className="flex items-center gap-2 md:w-[140px] shrink-0">
                   <div
                     className={`w-[10px] h-[10px] rounded-[2px] ${color.dot} border-1 ${color.border}`}
@@ -523,10 +532,32 @@ export default function Mixer({ songs, initialIndex = 0 }) {
                   <span className="text-xs font-bold truncate">
                     {track.label}
                   </span>
+                  <div className="flex items-center gap-1.5 ml-auto md:hidden">
+                    <button
+                      type="button"
+                      className={`flex items-center justify-center w-[28px] h-[28px] cursor-pointer border-1 border-[var(--t-panel-border)] rounded-[2px] ${isMuted ? "bg-red-100" : "bg-[var(--t-btn-bg)] hover:bg-[var(--t-btn-hover)]"} ${insetShadow}`}
+                      onClick={() => toggleMute(track.id)}
+                      title={isMuted ? "Unmute" : "Mute"}
+                    >
+                      <img
+                        className="w-[14px] h-[14px]"
+                        src={`${cdn}/icons/small/${isMuted ? "sound_mute" : "sound"}.png`}
+                        alt=""
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      className={`flex items-center justify-center w-[28px] h-[28px] cursor-pointer text-[10px] font-black border-1 border-[var(--t-panel-border)] rounded-[2px] ${isSoloed ? "bg-amber-200 text-amber-800 border-amber-400" : "bg-[var(--t-btn-bg)] hover:bg-[var(--t-btn-hover)] text-[var(--t-text-muted)]"} ${insetShadow}`}
+                      onClick={() => toggleSolo(track.id)}
+                      title={isSoloed ? "Unsolo" : "Solo"}
+                    >
+                      S
+                    </button>
+                  </div>
                 </div>
 
-                {/* Mute / Solo */}
-                <div className="flex items-center gap-1.5 shrink-0">
+                {/* Mute / Solo (desktop only) */}
+                <div className="hidden md:flex items-center gap-1.5 shrink-0">
                   <button
                     type="button"
                     className={`flex items-center justify-center w-[28px] h-[28px] cursor-pointer border-1 border-[var(--t-panel-border)] rounded-[2px] ${isMuted ? "bg-red-100" : "bg-[var(--t-btn-bg)] hover:bg-[var(--t-btn-hover)]"} ${insetShadow}`}
@@ -549,52 +580,55 @@ export default function Mixer({ songs, initialIndex = 0 }) {
                   </button>
                 </div>
 
-                {/* Volume */}
-                <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                  <img
-                    className={`w-[14px] h-[14px] shrink-0 ${dropShadow}`}
-                    src={`${cdn}/icons/small/sound_low.png`}
-                    alt=""
-                  />
-                  <input
-                    type="range"
-                    min={0}
-                    max={100}
-                    value={volumes[track.id] ?? 80}
-                    onChange={(e) =>
-                      setVolumes((prev) => ({
-                        ...prev,
-                        [track.id]: Number(e.target.value),
-                      }))
-                    }
-                    className="flex-1 min-w-0 retro-slider"
-                  />
-                  <span className="text-[10px] text-[var(--t-text-muted)] font-bold w-[24px] text-right tabular-nums">
-                    {volumes[track.id] ?? 80}
-                  </span>
-                </div>
+                {/* Volume + Pan */}
+                <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
+                  {/* Volume */}
+                  <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                    <img
+                      className={`w-[14px] h-[14px] shrink-0 ${dropShadow}`}
+                      src={`${cdn}/icons/small/sound_low.png`}
+                      alt=""
+                    />
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={volumes[track.id] ?? 80}
+                      onChange={(e) =>
+                        setVolumes((prev) => ({
+                          ...prev,
+                          [track.id]: Number(e.target.value),
+                        }))
+                      }
+                      className="flex-1 min-w-0 retro-slider"
+                    />
+                    <span className="text-[10px] text-[var(--t-text-muted)] font-bold w-[24px] text-right tabular-nums">
+                      {volumes[track.id] ?? 80}
+                    </span>
+                  </div>
 
-                {/* Pan */}
-                <div className="flex items-center gap-1.5 md:w-[140px] shrink-0">
-                  <span className="text-[10px] text-[var(--t-text-muted)] font-bold">
-                    L
-                  </span>
-                  <input
-                    type="range"
-                    min={-100}
-                    max={100}
-                    value={pans[track.id] ?? 0}
-                    onChange={(e) =>
-                      setPans((prev) => ({
-                        ...prev,
-                        [track.id]: Number(e.target.value),
-                      }))
-                    }
-                    className="flex-1 min-w-0 retro-slider"
-                  />
-                  <span className="text-[10px] text-[var(--t-text-muted)] font-bold">
-                    R
-                  </span>
+                  {/* Pan */}
+                  <div className="flex items-center gap-1.5 w-[100px] md:w-[140px] shrink-0">
+                    <span className="text-[10px] text-[var(--t-text-muted)] font-bold">
+                      L
+                    </span>
+                    <input
+                      type="range"
+                      min={-100}
+                      max={100}
+                      value={pans[track.id] ?? 0}
+                      onChange={(e) =>
+                        setPans((prev) => ({
+                          ...prev,
+                          [track.id]: Number(e.target.value),
+                        }))
+                      }
+                      className="flex-1 min-w-0 retro-slider"
+                    />
+                    <span className="text-[10px] text-[var(--t-text-muted)] font-bold">
+                      R
+                    </span>
+                  </div>
                 </div>
                 </div>
               </div>
