@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import { box, cdn, siteWidth } from "@/app/styles";
+import Link from "next/link";
+import { box, cdn, dropShadow, insetShadow, siteWidth } from "@/app/styles";
 import Sql from "@/lib/sql";
 import Ticker from "@/app/(site)/ticker";
 
@@ -37,16 +38,38 @@ export default async function Home() {
     GROUP BY p.id
     ORDER BY p.created_at DESC
   `;
-  const upcomingEvents = await Sql.client`
+  let upcomingEvents = await Sql.client`
     SELECT * FROM wendigo.events
     WHERE date >= CURRENT_DATE
     ORDER BY date ASC
     LIMIT 10
   `;
+  const hasUpcoming = upcomingEvents.length > 0;
+  if (!hasUpcoming) {
+    upcomingEvents = await Sql.client`
+      SELECT * FROM wendigo.events
+      WHERE date < CURRENT_DATE
+      ORDER BY date DESC
+      LIMIT 10
+    `;
+  }
   const now = Date.now();
 
   return (
     <div className={`mt-5 md:mt-8 text-[var(--t-text)] ${siteWidth}`}>
+      <Link
+        href="/contact"
+        className={`flex items-center justify-center gap-1.5 mb-5 md:mb-8 py-2 px-4 w-full rounded-[2px] border-1 border-amber-400/40 bg-gradient-to-bl from-amber-50 via-yellow-100 to-amber-200 cursor-pointer hover:from-amber-100 hover:via-yellow-150 hover:to-amber-250 active:from-white active:via-amber-50 active:to-amber-100 ${insetShadow} ${dropShadow}`}
+      >
+        <img
+          className={`w-[16px] h-[16px] ${dropShadow}`}
+          src={`${cdn}/icons/small/new.png`}
+          alt=""
+        />
+        <span className="text-xs font-bold text-amber-800/80 tracking-normal">
+          Need custom music, sound design, or art? Get in touch!
+        </span>
+      </Link>
       {upcomingEvents.length > 0 && (
         <>
           <div className="flex font-bold text-sm mb-2.5">
@@ -55,7 +78,7 @@ export default async function Home() {
               src={`${cdn}/icons/small/calendar.png`}
               alt=""
             />
-            Upcoming Events
+            {hasUpcoming ? "Upcoming Events" : "Recent Events"}
           </div>
           <Ticker events={upcomingEvents} />
         </>

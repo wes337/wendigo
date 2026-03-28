@@ -10,7 +10,7 @@ export default function ContactForm() {
   if (state?.success) {
     return (
       <div className={box}>
-        <div className="text-sm text-green-700 font-bold">
+        <div className="text-sm text-green-700 font-bold text-center">
           Your inquiry has been sent! We&apos;ll get back to you soon.
         </div>
       </div>

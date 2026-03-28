@@ -23,7 +23,8 @@ async function isRateLimited(ip) {
 
 export async function sendInquiry(_, formData) {
   const headerStore = await headers();
-  const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip =
+    headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
   if (await isRateLimited(ip)) {
     return { error: "Too many inquiries. Please try again later." };
@@ -34,12 +35,16 @@ export async function sendInquiry(_, formData) {
   const message = formData.get("message")?.trim()?.slice(0, 5000);
 
   if (!name) return { error: "Name is required." };
-  if (name.length > 100) return { error: "Name must be 100 characters or less." };
+  if (name.length > 100)
+    return { error: "Name must be 100 characters or less." };
   if (!email || email.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return { error: "A valid email is required." };
-  if (email.length > 320) return { error: "Email must be 320 characters or less." };
-  if (!message || message.length < 10) return { error: "Message must be at least 10 characters." };
-  if (message.length > 5000) return { error: "Message must be 5000 characters or less." };
+  if (email.length > 320)
+    return { error: "Email must be 320 characters or less." };
+  if (!message || message.length < 10)
+    return { error: "Message must be at least 10 characters." };
+  if (message.length > 5000)
+    return { error: "Message must be 5000 characters or less." };
 
   try {
     await Sql.client`
@@ -48,9 +53,10 @@ export async function sendInquiry(_, formData) {
     `;
 
     await resend.emails.send({
-      from: "Wendigo Corp <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL,
-      subject: `New inquiry from ${name}`,
+      from: "inquiry@mail.wendigo.live",
+      to: "wendigothesequel@gmail.com",
+      replyTo: email,
+      subject: `[WENDIGO CORP] New inquiry from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
     });
 
