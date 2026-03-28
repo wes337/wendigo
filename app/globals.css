@@ -247,6 +247,81 @@ body::before {
     overflow-x: auto;
   }
 
+  /* Retro range slider — BeOS / XP style */
+  .retro-slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Track */
+  .retro-slider::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #a1a1aa;
+    border-radius: 0;
+    border: 1px solid #71717a;
+    box-shadow:
+      inset 1px 1px 2px rgba(0, 0, 0, 0.35),
+      inset -1px -1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .retro-slider::-moz-range-track {
+    height: 6px;
+    background: #a1a1aa;
+    border-radius: 0;
+    border: 1px solid #71717a;
+    box-shadow:
+      inset 1px 1px 2px rgba(0, 0, 0, 0.35),
+      inset -1px -1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* Thumb */
+  .retro-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 18px;
+    margin-top: -7px;
+    background: linear-gradient(180deg, #f4f4f5 0%, #d4d4d8 40%, #a1a1aa 100%);
+    border: 1px solid #71717a;
+    border-top-color: #e4e4e7;
+    border-left-color: #e4e4e7;
+    border-radius: 1px;
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.6),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.15),
+      1px 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .retro-slider::-moz-range-thumb {
+    width: 12px;
+    height: 18px;
+    background: linear-gradient(180deg, #f4f4f5 0%, #d4d4d8 40%, #a1a1aa 100%);
+    border: 1px solid #71717a;
+    border-top-color: #e4e4e7;
+    border-left-color: #e4e4e7;
+    border-radius: 1px;
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.6),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.15),
+      1px 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .retro-slider::-webkit-slider-thumb:active {
+    background: linear-gradient(180deg, #e4e4e7 0%, #c4c4c8 40%, #919198 100%);
+  }
+
+  .retro-slider::-moz-range-thumb:active {
+    background: linear-gradient(180deg, #e4e4e7 0%, #c4c4c8 40%, #919198 100%);
+  }
+
   /* Tiptap editor styles */
   .tiptap:focus {
     outline: none;

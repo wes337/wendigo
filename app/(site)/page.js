@@ -58,6 +58,19 @@ export default async function Home() {
   return (
     <div className={`mt-5 md:mt-8 text-[var(--t-text)] ${siteWidth}`}>
       <Link
+        href="/mixer"
+        className={`flex items-center justify-center gap-1.5 mb-2 py-2 px-4 w-full rounded-[2px] border-1 border-fuchsia-400/40 bg-gradient-to-bl from-fuchsia-50 via-purple-100 to-fuchsia-200 cursor-pointer hover:from-fuchsia-100 hover:via-purple-150 hover:to-fuchsia-250 active:from-white active:via-fuchsia-50 active:to-fuchsia-100 ${insetShadow} ${dropShadow}`}
+      >
+        <img
+          className={`w-[16px] h-[16px] ${dropShadow}`}
+          src={`${cdn}/icons/small/control_equalizer.png`}
+          alt=""
+        />
+        <span className="text-xs font-bold text-fuchsia-900/80 tracking-normal">
+          Try our latest sample pack in the mixer! Click here!
+        </span>
+      </Link>
+      <Link
         href="/contact"
         className={`flex items-center justify-center gap-1.5 mb-5 md:mb-8 py-2 px-4 w-full rounded-[2px] border-1 border-amber-400/40 bg-gradient-to-bl from-amber-50 via-yellow-100 to-amber-200 cursor-pointer hover:from-amber-100 hover:via-yellow-150 hover:to-amber-250 active:from-white active:via-amber-50 active:to-amber-100 ${insetShadow} ${dropShadow}`}
       >
@@ -67,7 +80,7 @@ export default async function Home() {
           alt=""
         />
         <span className="text-xs font-bold text-amber-800/80 tracking-normal">
-          Need custom music, sound design, or art? Get in touch!
+          Need custom music, sound design, or art? Click here!
         </span>
       </Link>
       {upcomingEvents.length > 0 && (
