@@ -111,7 +111,7 @@ export default function CartPage() {
               {cart.items.map((item) => (
                 <div
                   key={item.id}
-                  className={`flex items-center gap-2.5 p-2 bg-[var(--t-row-even)] border-1 border-[var(--t-panel-border)] rounded-[2px] ${insetShadow}`}
+                  className={`relative flex items-center gap-2.5 p-2 bg-[var(--t-row-even)] border-1 border-[var(--t-panel-border)] rounded-[2px] ${insetShadow}`}
                 >
                   <Link
                     href={`/shop/${item.productHandle}`}
@@ -141,44 +141,42 @@ export default function CartPage() {
                       {usd.format(Number(item.price))}
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    {!item.digital && (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => handleQuantity(item.id, item.quantity - 1)}
-                          disabled={isPending}
-                          className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
-                        >
-                          −
-                        </button>
-                        <span className="w-[24px] text-center text-xs font-bold tabular-nums">
-                          {item.quantity}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => handleQuantity(item.id, item.quantity + 1)}
-                          disabled={isPending}
-                          className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
-                        >
-                          +
-                        </button>
-                      </>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(item.id)}
-                      disabled={isPending}
-                      title="Remove"
-                      className={`${btn} !px-1.5 !py-1 ml-1 disabled:opacity-60`}
-                    >
-                      <img
-                        className="w-[12px] h-[12px]"
-                        src={`${cdn}/icons/small/cross.png`}
-                        alt=""
-                      />
-                    </button>
-                  </div>
+                  {!item.digital && (
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleQuantity(item.id, item.quantity - 1)}
+                        disabled={isPending}
+                        className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
+                      >
+                        −
+                      </button>
+                      <span className="w-[24px] text-center text-xs font-bold tabular-nums">
+                        {item.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleQuantity(item.id, item.quantity + 1)}
+                        disabled={isPending}
+                        className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
+                      >
+                        +
+                      </button>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(item.id)}
+                    disabled={isPending}
+                    title="Remove"
+                    className={`${btn} !px-1.5 !py-1 absolute top-1.5 right-1.5 disabled:opacity-60`}
+                  >
+                    <img
+                      className="w-[12px] h-[12px]"
+                      src={`${cdn}/icons/small/cross.png`}
+                      alt=""
+                    />
+                  </button>
                 </div>
               ))}
             </div>
