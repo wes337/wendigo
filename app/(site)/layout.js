@@ -9,7 +9,7 @@ const LINKS = [
   { label: "Home", href: "/", icon: "house" },
   { label: "About", href: "/about", icon: "information" },
   { label: "Events", href: "/calendar", icon: "calendar" },
-  { label: "Shop", href: "/shop", icon: "shop" },
+  { label: "Shop", href: "/shop", icon: "shop", badge: true },
   { label: "Contact", href: "/contact", icon: "email" },
   { label: "News", href: "/news", icon: "newspaper" },
 ];
@@ -43,7 +43,7 @@ export default function SiteLayout({ children }) {
       <div className={`hidden md:flex ${box}`}>
         <div className="flex w-full items-center justify-evenly gap-5">
           {LINKS.map((link) => (
-            <NavLink key={link.label} href={link.href} icon={link.icon}>
+            <NavLink key={link.label} href={link.href} icon={link.icon} badge={link.badge}>
               {link.label}
             </NavLink>
           ))}
@@ -53,7 +53,7 @@ export default function SiteLayout({ children }) {
       {/* Mobile fixed bottom bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-evenly bg-gradient-to-t from-[var(--t-panel-from)] via-[var(--t-panel-via)] to-[var(--t-panel-to)] border-t-1 border-[var(--t-panel-border)] pb-[env(safe-area-inset-bottom)]">
         {LINKS.map((link, i) => (
-          <NavLink key={link.label} href={link.href} icon={link.icon} isLast={i === LINKS.length - 1}>
+          <NavLink key={link.label} href={link.href} icon={link.icon} badge={link.badge} isLast={i === LINKS.length - 1}>
             {link.label}
           </NavLink>
         ))}

@@ -81,7 +81,7 @@ export default async function ProductPage({ params }) {
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
               />
             )}
-            <VariantPicker product={product} />
+            <VariantPicker product={product} digital={product.digital} />
             {product.sizeChart?.value && (
               <details className={`${insetShadow} border-1 border-[var(--t-panel-border)] rounded-[2px] bg-[var(--t-input-bg)]`}>
                 <summary className="flex items-center gap-1 px-2.5 py-2 cursor-pointer text-xs font-bold">

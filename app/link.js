@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { cdn, insetShadow, dropShadow } from "@/app/styles";
 
-export default function Link({ href, icon, children, isLast }) {
+export default function Link({ href, icon, children, isLast, badge }) {
   const pathname = usePathname();
 
   const active = pathname === href;
@@ -29,19 +29,28 @@ export default function Link({ href, icon, children, isLast }) {
       {/* Mobile: beveled tab in bottom bar */}
       <NextLink
         href={href}
-        className={`md:hidden flex flex-col items-center justify-center gap-0.5 py-2 px-1 flex-1 text-[10px] leading-none ${isLast ? "" : "border-r border-[var(--t-panel-border)]"} ${mobActive}`}
+        className={`md:hidden relative flex flex-col items-center justify-center gap-0.5 py-2 px-1 flex-1 text-[10px] leading-none ${isLast ? "" : "border-r border-[var(--t-panel-border)]"} ${mobActive}`}
       >
-        <img
-          className="w-[24px] h-[24px]"
-          src={`${cdn}/icons/${icon}.png`}
-          alt=""
-        />
+        <div className="relative">
+          <img
+            className="w-[24px] h-[24px]"
+            src={`${cdn}/icons/${icon}.png`}
+            alt=""
+          />
+          {badge && (
+            <img
+              className="absolute -top-2 -right-6 pointer-events-none"
+              src={`${cdn}/icons/small/new.png`}
+              alt="New"
+            />
+          )}
+        </div>
         <span>{children}</span>
       </NextLink>
       {/* Desktop: button style */}
       <NextLink
         href={href}
-        className={`hidden md:flex items-center justify-center w-full p-2.5 px-5 gap-2 text-xs 3xl:text-md text-center ${background} ${deskText} ${border} ${insetShadow} ${dropShadow}`}
+        className={`hidden md:flex relative items-center justify-center w-full p-2.5 px-5 gap-2 text-xs 3xl:text-md text-center ${background} ${deskText} ${border} ${insetShadow} ${dropShadow}`}
       >
         <img
           className="w-[16px] h-[16px] -mt-[2px]"
@@ -49,6 +58,13 @@ export default function Link({ href, icon, children, isLast }) {
           alt=""
         />
         <div className="w-full">{children}</div>
+        {badge && (
+          <img
+            className="absolute -top-3 -right-3 pointer-events-none"
+            src={`${cdn}/icons/new.png`}
+            alt="New"
+          />
+        )}
       </NextLink>
     </>
   );

@@ -142,25 +142,29 @@ export default function CartPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => handleQuantity(item.id, item.quantity - 1)}
-                      disabled={isPending}
-                      className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
-                    >
-                      −
-                    </button>
-                    <span className="w-[24px] text-center text-xs font-bold tabular-nums">
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => handleQuantity(item.id, item.quantity + 1)}
-                      disabled={isPending}
-                      className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
-                    >
-                      +
-                    </button>
+                    {!item.digital && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => handleQuantity(item.id, item.quantity - 1)}
+                          disabled={isPending}
+                          className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
+                        >
+                          −
+                        </button>
+                        <span className="w-[24px] text-center text-xs font-bold tabular-nums">
+                          {item.quantity}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleQuantity(item.id, item.quantity + 1)}
+                          disabled={isPending}
+                          className={`${btn} !px-2 !py-1 text-xs disabled:opacity-60`}
+                        >
+                          +
+                        </button>
+                      </>
+                    )}
                     <button
                       type="button"
                       onClick={() => handleRemove(item.id)}

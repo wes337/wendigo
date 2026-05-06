@@ -15,6 +15,7 @@ function normalizeCart(cart) {
     price: node.merchandise.price.amount,
     currencyCode: node.merchandise.price.currencyCode,
     image: node.merchandise.image?.url || "",
+    digital: !node.merchandise.requiresShipping,
   }));
 
   const count = items.reduce((sum, item) => sum + item.quantity, 0);

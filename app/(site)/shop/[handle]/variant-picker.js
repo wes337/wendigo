@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { cdn, input, submitBtn } from "@/app/styles";
 import { addLine } from "@/app/(site)/shop/actions";
 
-export default function VariantPicker({ product }) {
+export default function VariantPicker({ product, digital }) {
   const available = product.variants.filter((v) => v.availableForSale);
   const defaultVariant = available[0] || product.variants[0];
   const [variantId, setVariantId] = useState(defaultVariant?.id || "");
   const [quantity, setQuantity] = useState(1);
   const [status, setStatus] = useState(null);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const isDefaultTitleOnly =
     product.variants.length === 1 && product.variants[0].title === "Default Title";
@@ -45,7 +47,7 @@ export default function VariantPicker({ product }) {
           localStorage.setItem("cartId", cart.id);
         }
         window.dispatchEvent(new Event("cart-updated"));
-        setStatus({ ok: true, message: "Added to cart!" });
+        router.push("/shop/cart");
       } catch (e) {
         console.error(e);
         setStatus({ ok: false, message: "Failed to add. Try again." });
@@ -72,19 +74,21 @@ export default function VariantPicker({ product }) {
           </select>
         </label>
       )}
-      <label className="flex flex-col gap-1">
-        <span className="text-xs font-bold">Quantity</span>
-        <input
-          type="number"
-          min={1}
-          max={99}
-          value={quantity}
-          onChange={(e) =>
-            setQuantity(Math.max(1, Math.min(99, Number(e.target.value) || 1)))
-          }
-          className={input}
-        />
-      </label>
+      {!digital && (
+        <label className="flex flex-col gap-1">
+          <span className="text-xs font-bold">Quantity</span>
+          <input
+            type="number"
+            min={1}
+            max={99}
+            value={quantity}
+            onChange={(e) =>
+              setQuantity(Math.max(1, Math.min(99, Number(e.target.value) || 1)))
+            }
+            className={input}
+          />
+        </label>
+      )}
       <button
         type="button"
         onClick={handleAdd}
