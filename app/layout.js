@@ -4,6 +4,17 @@ import "./globals.css";
 export const metadata = {
   title: "WENDIGO CORP",
   description: "The official Wendigo Corp website.",
+  openGraph: {
+    title: "WENDIGO CORP",
+    description: "The official Wendigo Corp website.",
+    images: ["/poster.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WENDIGO CORP",
+    description: "The official Wendigo Corp website.",
+    images: ["/poster.jpg"],
+  },
 };
 
 export default function RootLayout({ children }) {

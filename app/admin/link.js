@@ -21,7 +21,7 @@ export default function AdminLink({ href, icon, children }) {
   return (
     <NextLink
       href={href}
-      className={`flex items-center justify-center h-[56px] w-[56px] md:h-auto md:w-full md:p-2.5 md:px-5 md:gap-1.5 text-xs md:text-sm ${background} ${text} ${border} ${insetShadow} ${dropShadow}`}
+      className={`flex items-center justify-center h-[56px] w-[56px] md:h-auto md:w-full md:p-2 md:px-3 md:gap-1.5 text-xs md:text-xs ${background} ${text} ${border} ${insetShadow} ${dropShadow}`}
     >
       {icon && (
         <>

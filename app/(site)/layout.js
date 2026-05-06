@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import NavLink from "@/app/link";
-import Slogan from "@/app/slogan";
+import Slogan from "@/app/(site)/slogan";
 import { box, cdn } from "@/app/styles";
 
 export const dynamic = "force-dynamic";
