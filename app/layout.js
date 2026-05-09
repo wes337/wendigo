@@ -2,6 +2,7 @@ import Theme from "@/app/theme";
 import "./globals.css";
 
 export const metadata = {
+  metadataBase: new URL("https://wendigo.live"),
   title: "WENDIGO CORP",
   description: "The official Wendigo Corp website.",
   openGraph: {

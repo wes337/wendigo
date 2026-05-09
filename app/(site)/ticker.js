@@ -11,7 +11,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 function EventItem({ event }) {
   return (
     <Link
-      href="/calendar"
+      href={`/calendar?event=${event.id}`}
       className="flex items-center gap-1.5 shrink-0 group"
     >
       <img

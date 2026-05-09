@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useSearchParams } from "next/navigation";
 import { cdn, dropShadow, insetShadow, siteWidth } from "@/app/styles";
 
 const COLOR_MAP = {
@@ -33,6 +34,22 @@ function isSameDay(date1, date2) {
 
 export default function CalendarGrid({ year, month, days, firstDay, currentDay, events }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const eventId = searchParams.get("event");
+    if (eventId) {
+      const match = events.find((e) => String(e.id) === eventId);
+      if (match) setSelectedEvent(match);
+    }
+  }, [searchParams, events]);
+
+  useEffect(() => {
+    if (selectedEvent) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [selectedEvent]);
 
   return (
     <>

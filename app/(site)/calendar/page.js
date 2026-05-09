@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { box, cdn, siteWidth } from "@/app/styles";
 import Sql from "@/lib/sql";
 import CalendarGrid from "@/app/(site)/calendar/grid";
@@ -30,14 +31,16 @@ export default async function Calendar() {
         <div className="font-bold pb-0 px-5">
           {monthFormatter.format(today)} {yearFormatter.format(today)}
         </div>
-        <CalendarGrid
-          year={today.getFullYear()}
-          month={today.getMonth()}
-          days={days}
-          firstDay={firstDay}
-          currentDay={today.getDate()}
-          events={events}
-        />
+        <Suspense>
+          <CalendarGrid
+            year={today.getFullYear()}
+            month={today.getMonth()}
+            days={days}
+            firstDay={firstDay}
+            currentDay={today.getDate()}
+            events={events}
+          />
+        </Suspense>
       </div>
     </div>
   );
