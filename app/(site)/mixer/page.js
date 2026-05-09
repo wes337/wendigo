@@ -6,22 +6,29 @@ const TRACK_COLORS = [
   "blue", "red", "green", "orange", "purple", "pink", "yellow", "zinc",
 ];
 
+const PREVIEW_SONGS = new Set([
+  "APPALACHIAN TRAIL 72 BPM",
+  "ATLANTIS SHIT 145 BPM",
+  "CONEY ISLAND HOTDOG C MINOR 79 BPM",
+]);
+
 export default async function MixerPage() {
   const packs = await listSamplePacks();
 
-  // Flatten into a list of songs with colored tracks
   const songs = packs.flatMap((pack) =>
-    pack.songs.map((song) => ({
-      pack: pack.name,
-      name: song.name,
-      tracks: song.tracks.map((t, i) => ({
-        id: i + 1,
-        label: t.name.replace(/\.[^.]+$/, ""),
-        url: t.url,
-        size: t.size,
-        color: TRACK_COLORS[i % TRACK_COLORS.length],
-      })),
-    }))
+    pack.songs
+      .filter((song) => PREVIEW_SONGS.has(song.name))
+      .map((song) => ({
+        pack: pack.name,
+        name: song.name,
+        tracks: song.tracks.map((t, i) => ({
+          id: i + 1,
+          label: t.name.replace(/\.[^.]+$/, ""),
+          url: t.url,
+          size: t.size,
+          color: TRACK_COLORS[i % TRACK_COLORS.length],
+        })),
+      }))
   );
 
   return (
