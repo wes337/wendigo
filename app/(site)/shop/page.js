@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { box, cdn, dropShadow, insetShadow, siteWidth, smallBox } from "@/app/styles";
 import Shopify from "@/lib/shopify";
+import { shopifyImage } from "@/lib/shopify-image";
 import CartBadge from "@/app/(site)/shop/cart-badge";
 
 export const revalidate = 120;
@@ -44,7 +45,7 @@ export default async function Shop() {
                 >
                   {product.images[0] ? (
                     <img
-                      src={product.images[0]}
+                      src={shopifyImage(product.images[0], 480)}
                       alt={product.title}
                       className={`w-full h-full object-cover ${product.soldOut ? "opacity-50" : ""}`}
                     />

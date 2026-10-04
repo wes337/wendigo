@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { box, cdn, dropShadow, insetShadow, siteWidth } from "@/app/styles";
 import Shopify from "@/lib/shopify";
+import { shopifyImage } from "@/lib/shopify-image";
 import CartBadge from "@/app/(site)/shop/cart-badge";
 import VariantPicker from "@/app/(site)/shop/[handle]/variant-picker";
 
@@ -42,7 +43,7 @@ export default async function ProductPage({ params }) {
             >
               {product.images[0] ? (
                 <img
-                  src={product.images[0]}
+                  src={shopifyImage(product.images[0], 800)}
                   alt={product.title}
                   className={`w-full h-full object-contain ${product.soldOut ? "opacity-50" : ""}`}
                 />
@@ -64,7 +65,7 @@ export default async function ProductPage({ params }) {
                     key={i}
                     className={`aspect-square bg-[var(--t-input-bg)] border-1 border-[var(--t-panel-border)] rounded-[2px] overflow-hidden ${insetShadow}`}
                   >
-                    <img src={src} alt="" className="w-full h-full object-cover" />
+                    <img src={shopifyImage(src, 200)} alt="" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>

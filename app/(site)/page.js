@@ -10,10 +10,10 @@ const POSTS_PER_PAGE = 5;
 
 function PageLink({ page, disabled, children }) {
   if (disabled) {
-    return <span className={`${btn} opacity-50 cursor-default`}>{children}</span>;
+    return <span className={`${btn} gap-1 w-[96px] opacity-50 cursor-default`}>{children}</span>;
   }
   return (
-    <Link href={page === 1 ? "/" : `/?page=${page}`} className={btn}>
+    <Link href={page === 1 ? "/" : `/?page=${page}`} className={`${btn} gap-1 w-[96px]`}>
       {children}
     </Link>
   );
@@ -205,13 +205,15 @@ export default async function Home({ searchParams }) {
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-2.5">
           <PageLink page={page - 1} disabled={page === 1}>
-            &laquo; Newer
+            <img className="w-[16px] h-[16px]" src={`${cdn}/icons/small/arrow_left.png`} alt="" />
+            Newer
           </PageLink>
           <span className="text-xs font-bold text-[var(--t-text-muted)]">
             Page {page} of {totalPages}
           </span>
           <PageLink page={page + 1} disabled={page === totalPages}>
-            Older &raquo;
+            Older
+            <img className="w-[16px] h-[16px]" src={`${cdn}/icons/small/arrow_right.png`} alt="" />
           </PageLink>
         </div>
       )}

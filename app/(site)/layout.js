@@ -58,7 +58,7 @@ export default function SiteLayout({ children }) {
           </NavLink>
         ))}
       </div>
-      <div className="w-full text-center py-5 text-[12px] text-[var(--t-text-muted)] mt-auto">
+      <div className="w-full text-center pt-10 md:pt-13 pb-5 text-[12px] text-[var(--t-text-muted)] mt-auto">
         <div className="flex items-center justify-center gap-2.5">
           <NextLink href="/contact" className="text-[var(--t-accent)] text-[10px] font-bold uppercase cursor-pointer hover:underline active:underline">
             Contact Us

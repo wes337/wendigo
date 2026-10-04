@@ -16,6 +16,7 @@ import {
   removeLine,
   updateLineQuantity,
 } from "@/app/(site)/shop/actions";
+import { shopifyImage } from "@/lib/shopify-image";
 
 const usd = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -119,7 +120,7 @@ export default function CartPage() {
                   >
                     {item.image && (
                       <img
-                        src={item.image}
+                        src={shopifyImage(item.image, 120)}
                         alt=""
                         className="w-full h-full object-cover"
                       />
