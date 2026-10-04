@@ -3,19 +3,34 @@ import { box, cdn, siteWidth } from "@/app/styles";
 import Sql from "@/lib/sql";
 import CalendarGrid from "@/app/(site)/calendar/grid";
 
-const today = new Date();
 const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long" });
 const yearFormatter = new Intl.DateTimeFormat("en-US", { year: "numeric" });
 
-export default async function Calendar() {
+// Shows the current month, or the month of `?event=<id>` when linked to one (e.g. from the ticker)
+export default async function Calendar({ searchParams }) {
+  const today = new Date();
+  const { event: eventId } = await searchParams;
+
+  let shown = today;
+  if (eventId && /^\d+$/.test(eventId)) {
+    const [linked] = await Sql.client`
+      SELECT date FROM wendigo.events WHERE id = ${eventId}
+    `;
+    if (linked) shown = new Date(linked.date);
+  }
+
+  const year = shown.getFullYear();
+  const month = shown.getMonth();
+  const isCurrentMonth = year === today.getFullYear() && month === today.getMonth();
+
   const events = await Sql.client`
     SELECT * FROM wendigo.events
-    WHERE date >= ${new Date(today.getFullYear(), today.getMonth(), 1)}
-      AND date < ${new Date(today.getFullYear(), today.getMonth() + 1, 1)}
+    WHERE date >= ${new Date(year, month, 1)}
+      AND date < ${new Date(year, month + 1, 1)}
   `;
 
-  const days = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+  const days = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay();
 
   return (
     <div className={`mt-5 text-[var(--t-text)] ${siteWidth}`}>
@@ -29,15 +44,15 @@ export default async function Calendar() {
       </div>
       <div className={`${box} px-0`}>
         <div className="font-bold pb-0 px-5">
-          {monthFormatter.format(today)} {yearFormatter.format(today)}
+          {monthFormatter.format(shown)} {yearFormatter.format(shown)}
         </div>
         <Suspense>
           <CalendarGrid
-            year={today.getFullYear()}
-            month={today.getMonth()}
+            year={year}
+            month={month}
             days={days}
             firstDay={firstDay}
-            currentDay={today.getDate()}
+            currentDay={isCurrentMonth ? today.getDate() : null}
             events={events}
           />
         </Suspense>

@@ -50,7 +50,11 @@ export default function Ticker({ events }) {
       <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[var(--t-panel-via)] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[var(--t-panel-via)] to-transparent z-10 pointer-events-none" />
 
-      <div className="flex animate-ticker whitespace-nowrap">
+      {/* w-max so -50% in the keyframes equals exactly one copy of the list; duration scales so speed stays constant */}
+      <div
+        className="flex w-max animate-ticker whitespace-nowrap"
+        style={{ animationDuration: `${events.length * 5}s` }}
+      >
         <div className="flex items-center gap-6 py-2 pr-6 shrink-0">
           {events.map((event) => (
             <EventItem key={event.id} event={event} />

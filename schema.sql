@@ -23,6 +23,16 @@ CREATE TABLE IF NOT EXISTS wendigo.post_files (
   PRIMARY KEY (post_id, file_id)
 );
 
+CREATE TABLE IF NOT EXISTS wendigo.post_reactions (
+  post_id INTEGER NOT NULL REFERENCES wendigo.posts(id) ON DELETE CASCADE,
+  visitor_id TEXT NOT NULL,
+  ip_hash TEXT NOT NULL,
+  reaction TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (post_id, visitor_id),
+  UNIQUE (post_id, ip_hash)
+);
+
 CREATE TABLE IF NOT EXISTS wendigo.articles (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
