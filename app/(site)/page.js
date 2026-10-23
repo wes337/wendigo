@@ -8,6 +8,10 @@ import ReactionBar from "@/app/(site)/reaction-bar";
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 const POSTS_PER_PAGE = 5;
 
+// Promo banner tinted by `--promo` (set per banner), mixed into the theme's colors so it works on every theme
+const promoBanner = `flex items-center justify-center gap-1.5 py-2 px-4 w-full rounded-[2px] border-1 border-[color-mix(in_oklab,var(--promo)_40%,transparent)] bg-gradient-to-bl from-[color-mix(in_oklab,var(--promo)_8%,var(--t-input-bg))] via-[color-mix(in_oklab,var(--promo)_18%,var(--t-input-bg))] to-[color-mix(in_oklab,var(--promo)_32%,var(--t-input-bg))] hover:from-[color-mix(in_oklab,var(--promo)_14%,var(--t-input-bg))] hover:via-[color-mix(in_oklab,var(--promo)_26%,var(--t-input-bg))] hover:to-[color-mix(in_oklab,var(--promo)_40%,var(--t-input-bg))] active:from-[var(--t-input-bg)] active:via-[color-mix(in_oklab,var(--promo)_8%,var(--t-input-bg))] active:to-[color-mix(in_oklab,var(--promo)_18%,var(--t-input-bg))] cursor-pointer ${insetShadow} ${dropShadow}`;
+const promoText = "text-xs font-bold tracking-normal text-[color-mix(in_oklab,var(--promo)_45%,var(--t-text))]";
+
 function PageLink({ page, disabled, children }) {
   if (disabled) {
     return <span className={`${btn} gap-1 w-[96px] opacity-50 cursor-default`}>{children}</span>;
@@ -100,27 +104,27 @@ export default async function Home({ searchParams }) {
     <div className={`mt-5 md:mt-8 text-[var(--t-text)] ${siteWidth}`}>
       <Link
         href="/mixer"
-        className={`flex items-center justify-center gap-1.5 mb-2 py-2 px-4 w-full rounded-[2px] border-1 border-fuchsia-400/40 bg-gradient-to-bl from-fuchsia-50 via-purple-100 to-fuchsia-200 cursor-pointer hover:from-fuchsia-100 hover:via-purple-150 hover:to-fuchsia-250 active:from-white active:via-fuchsia-50 active:to-fuchsia-100 ${insetShadow} ${dropShadow}`}
+        className={`${promoBanner} mb-2 [--promo:var(--color-fuchsia-500)]`}
       >
         <img
           className={`w-[16px] h-[16px] ${dropShadow}`}
           src={`${cdn}/icons/small/control_equalizer.png`}
           alt=""
         />
-        <span className="text-xs font-bold text-fuchsia-900/80 tracking-normal">
+        <span className={promoText}>
           Try our latest sample pack in the mixer! Click here!
         </span>
       </Link>
       <Link
         href="/contact"
-        className={`flex items-center justify-center gap-1.5 mb-5 md:mb-8 py-2 px-4 w-full rounded-[2px] border-1 border-amber-400/40 bg-gradient-to-bl from-amber-50 via-yellow-100 to-amber-200 cursor-pointer hover:from-amber-100 hover:via-yellow-150 hover:to-amber-250 active:from-white active:via-amber-50 active:to-amber-100 ${insetShadow} ${dropShadow}`}
+        className={`${promoBanner} mb-5 md:mb-8 [--promo:var(--color-amber-500)]`}
       >
         <img
           className={`w-[16px] h-[16px] ${dropShadow}`}
           src={`${cdn}/icons/small/new.png`}
           alt=""
         />
-        <span className="text-xs font-bold text-amber-800/80 tracking-normal">
+        <span className={promoText}>
           Need custom music, sound design, or art? Click here!
         </span>
       </Link>
@@ -151,7 +155,7 @@ export default async function Home({ searchParams }) {
             key={post.id}
             className="border-1 border-[var(--t-panel-border)] rounded-[2px] overflow-hidden drop-shadow-sm"
           >
-            <div className={`flex items-center gap-1.5 px-2.5 py-1.5 bg-gradient-to-bl from-zinc-50 via-slate-100 to-slate-200 border-b-1 border-[var(--t-panel-border)] ${insetShadow}`}>
+            <div className={`flex items-center gap-1.5 px-2.5 py-1.5 bg-gradient-to-bl from-[var(--t-row-hover)] via-[var(--t-input-bg)] to-[var(--t-row-even)] border-b-1 border-[var(--t-panel-border)] ${insetShadow}`}>
               <h2 className="text-sm font-bold truncate">
                 {post.title}
               </h2>
@@ -187,7 +191,7 @@ export default async function Home({ searchParams }) {
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 px-2.5 py-1 text-xs text-[var(--t-text-muted)] bg-[var(--t-row-even)] border-t-1 border-[var(--t-panel-border)]">
               <div>
                 <span className="hidden md:inline">Posted by </span>
-                <span className="text-orange-600 font-bold cursor-pointer hover:underline active:underline">
+                <span className="text-[color-mix(in_oklab,var(--color-orange-600)_75%,var(--t-text))] font-bold cursor-pointer hover:underline active:underline">
                   {post.author}
                 </span>{" "}
                 <span className="hidden md:inline">on </span>
